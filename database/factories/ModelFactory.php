@@ -23,16 +23,20 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Models\Thread::class, function ($faker) {
+$factory->define(App\Models\Thread::class, function (Faker\Generator $faker) {
     return [
-        'user_id' => function () {
-            return factory('App\Models\User')->create()->id;
+        'user_id'    => function () {
+            return factory(App\Models\User::class)->create()->id;
         },
-        'title' => $faker->sentence,
-        'body'  => $faker->paragraph
+        'channel_id' => function () {
+            return factory(App\Models\Channel::class)->create()->id;
+        },
+        'title'      => $faker->sentence,
+        'body'       => $faker->paragraph,
     ];
 });
-$factory->define(App\Models\Reply::class, function ($faker) {
+
+$factory->define(App\Models\Reply::class, function (Faker\Generator $faker) {
     return [
         'thread_id' => function () {
             return factory('App\Models\Thread')->create()->id;
@@ -41,5 +45,12 @@ $factory->define(App\Models\Reply::class, function ($faker) {
             return factory('App\Models\User')->create()->id;
         },
         'body'  => $faker->paragraph
+    ];
+});
+
+$factory->define(App\Models\Channel::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word,
+        'slug' => $faker->word,
     ];
 });

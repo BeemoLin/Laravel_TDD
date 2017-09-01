@@ -12,13 +12,13 @@ use App\Models\Reply;
 
 class ThreadsTest extends TestCase
 {
-    //use DatabaseMigrations;
+    use DatabaseMigrations;
 
     public function setUp()
     {
         parent::setUp();
  
-        $this->thread = factory(Thread::class)->create();
+        $this->thread = create(Thread::class);
     }
 
     /** @test **/
@@ -30,14 +30,14 @@ class ThreadsTest extends TestCase
     /** @test **/
     public function a_user_can_read_a_single_thread()
     {
-        $response = $this->get('/threads/' . $this->thread->id)->assertSee($this->thread->title);
+        $response = $this->get($this->thread->path())->assertSee($this->thread->title);
     }
 
     /** @test **/
     public function a_user_can_read_replies_that_are_associated_with_a_thread()
     {
-        $reply = factory(Reply::class)->create(['thread_id' => $this->thread->id]);
+        $reply = create(Reply::class, ['thread_id' => $this->thread->id]);
 
-        $this->get('/threads/' . $this->thread->id)->assertSee($reply->body);
+        $this->get($this->thread->path())->assertSee($reply->body);
     }
 }

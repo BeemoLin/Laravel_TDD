@@ -11,12 +11,12 @@ use App\Models\User;
 
 class ReplyTest extends TestCase
 {
-	//use DatabaseMigrations;
+	use DatabaseMigrations;
     
     /** @test **/
     public function it_has_an_owner()
     {
-    	$reply = factory(Reply::class)->create();
+    	$reply = create(Reply::class);
 
     	$this->assertInstanceOf(User::class, $reply->owner);
     }

@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Reply;
 use Illuminate\Http\Request;
+
+use App\Models\Reply;
+use App\Models\Thread;
 
 class ReplyController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,15 +34,18 @@ class ReplyController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store($channelId, Thread $thread)
     {
-        //
+        $this->validate(request(), [
+            'body' => 'required'
+        ]);
+
+        $thread->addReply([
+            'body' => request('body'),
+            'user_id' => auth()->id(),
+            ]);
+
+        return back();
     }
 
     /**
