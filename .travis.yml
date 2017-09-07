@@ -6,6 +6,10 @@ php:
   - 7.2
   - nightly
 
+install:
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install --dev --no-interaction
+
 before_script:
   - chmod -R 777 bootstrap/cache
   - chmod -R 777 storage
@@ -19,11 +23,16 @@ before_script:
 script:
   #- php artisan migrate --env=testing --no-interaction -vvv
   #- php artisan db:seed --env=testing --no-interaction -vvv
+  - mkdir -p build/logs
+  - php vendor/bin/phpunit -c phpunit.xml.dist
   - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
   #- php artisan migrate:rollback --env=testing --no-interaction -vvv
 
 after_success:
   - vendor/bin/test-reporter
+  - travis_retry php vendor/bin/coveralls
+  # or enable logging
+  - travis_retry php vendor/bin/coveralls -v
 
 after_script:
   - php vendor/bin/codacycoverage clover
