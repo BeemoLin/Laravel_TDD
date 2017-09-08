@@ -29,7 +29,7 @@ script:
   #- php artisan migrate:rollback --env=testing --no-interaction -vvv
 
 after_success:
-  - vendor/bin/test-reporter
+  #- vendor/bin/test-reporter
   - travis_retry php vendor/bin/coveralls
 
 notifications:
