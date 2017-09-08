@@ -9,6 +9,7 @@ php:
 install:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install --dev --no-interaction
+  - travis_retry composer install --no-interaction --prefer-source
 
 before_script:
   - chmod -R 777 bootstrap/cache
