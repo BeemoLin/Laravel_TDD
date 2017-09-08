@@ -30,9 +30,6 @@ script:
 
 after_success:
   - vendor/bin/test-reporter
-  - travis_retry php vendor/bin/coveralls
-  # or enable logging
-  - travis_retry php vendor/bin/coveralls -v
 
 after_script:
   - CODECLIMATE_REPO_TOKEN="d3a0ea333b4d760cc2403e4e24dee46183a5eebd0a567973167d53b0d4a6a779" vendor/bin/test-reporter --stdout > codeclimate.json
