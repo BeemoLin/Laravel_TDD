@@ -30,8 +30,6 @@ script:
 after_success:
   - vendor/bin/test-reporter
   - travis_retry php vendor/bin/coveralls
-  # or enable logging
-  - travis_retry php vendor/bin/coveralls -v
 
 notifications:
   email:
